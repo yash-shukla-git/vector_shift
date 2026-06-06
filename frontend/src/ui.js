@@ -20,6 +20,11 @@ const nodeTypes = {
   llm: LLMNode,
   customOutput: OutputNode,
   text: TextNode,
+  api: APINode,       // new
+  filter: FilterNode, // new
+  math: MathNode,     // new
+  note: NoteNode,     // new
+  transform: TransformNode, // new
 };
 
 const selector = (state) => ({
