@@ -111,8 +111,9 @@ export const BaseNode = ({ id, title, fields, handles, style }) => {
               />
             ) : (
               <input
-                type={field.type || 'text'}
+                type={field.type}
                 value={field.value}
+                placeholder={field.placeholder}
                 onChange={field.onChange}
                 style={{
                   background: 'var(--bg-input)',

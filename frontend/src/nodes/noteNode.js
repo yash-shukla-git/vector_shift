@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { BaseNode } from './BaseNode';
 
 export const NoteNode = ({ id, data }) => {
-  const [note, setNote] = useState(data?.note || 'Add a note...');
+  const [note, setNote] = useState(data?.note || '');
 
   const fields = [
     {
@@ -10,6 +10,7 @@ export const NoteNode = ({ id, data }) => {
       label: 'Note',
       type: 'text',
       value: note,
+      placeholder: 'Add a note...',
       onChange: (e) => setNote(e.target.value),
     },
   ];
