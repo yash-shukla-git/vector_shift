@@ -1,21 +1,22 @@
 import { Handle, Position } from 'reactflow';
 
-export const BaseNode = ({ id, title, fields, handles }) => {
+export const BaseNode = ({ id, title, fields, handles, style }) => {
   return (
-    <div style={{
-      width: 'var(--node-width)',
-      background: 'var(--bg-node)',
-      borderRadius: 'var(--node-radius)',
-      boxShadow: 'var(--shadow-node)',
-      border: '1px solid var(--border-color)',
-      fontFamily: 'var(--font-sans)',
-      transition: 'var(--transition)',
-      overflow: 'visible',
-    }}
-         onMouseEnter={e => e.currentTarget.style.boxShadow = 'var(--shadow-node-hover)'}
-         onMouseLeave={e => e.currentTarget.style.boxShadow = 'var(--shadow-node)'}
+    <div
+      style={{
+        width: 'var(--node-width)',
+        background: 'var(--bg-node)',
+        borderRadius: 'var(--node-radius)',
+        boxShadow: 'var(--shadow-node)',
+        border: '1px solid var(--border-color)',
+        fontFamily: 'var(--font-sans)',
+        transition: 'var(--transition)',
+        overflow: 'visible',
+        ...style,
+      }}
+      onMouseEnter={e => e.currentTarget.style.boxShadow = 'var(--shadow-node-hover)'}
+      onMouseLeave={e => e.currentTarget.style.boxShadow = 'var(--shadow-node)'}
     >
-      {/* Header */}
       <div style={{
         background: 'var(--bg-node-header)',
         borderRadius: 'calc(var(--node-radius)) calc(var(--node-radius)) 0 0',
@@ -34,7 +35,6 @@ export const BaseNode = ({ id, title, fields, handles }) => {
         </span>
       </div>
 
-      {/* Body */}
       <div style={{
         padding: '10px 12px',
         display: 'flex',
@@ -86,6 +86,29 @@ export const BaseNode = ({ id, title, fields, handles }) => {
                   <option key={opt.value} value={opt.value}>{opt.label}</option>
                 ))}
               </select>
+            ) : field.type === 'textarea' ? (
+              <textarea
+                ref={field.ref || null}
+                value={field.value}
+                onChange={field.onChange}
+                rows={field.rows || 3}
+                style={{
+                  background: 'var(--bg-input)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: 'var(--node-radius)',
+                  color: 'var(--text-primary)',
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: '12px',
+                  padding: '5px 8px',
+                  outline: 'none',
+                  transition: 'var(--transition)',
+                  width: '100%',
+                  resize: 'none',
+                  overflow: 'hidden',
+                }}
+                onFocus={e => e.target.style.borderColor = 'var(--border-dark)'}
+                onBlur={e => e.target.style.borderColor = 'var(--border-color)'}
+              />
             ) : (
               <input
                 type={field.type || 'text'}
@@ -111,7 +134,6 @@ export const BaseNode = ({ id, title, fields, handles }) => {
         ))}
       </div>
 
-      {/* Target handles (left) */}
       {handles
         .filter(h => h.type === 'target')
         .map(h => (
@@ -124,7 +146,6 @@ export const BaseNode = ({ id, title, fields, handles }) => {
           />
         ))}
 
-      {/* Source handles (right) */}
       {handles
         .filter(h => h.type === 'source')
         .map(h => (
